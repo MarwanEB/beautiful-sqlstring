@@ -1,0 +1,28 @@
+name: "Build & Tests"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+env:
+  NODE_ENV: development
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: './.github/actions/setup-node'
+      - run: npm ci
+      - name: Build
+        run: npm run build --if-present
+      - name: Run tests with coverage
+        run: npm test --coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
