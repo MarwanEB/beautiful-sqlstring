@@ -33,6 +33,5 @@ $ npm publish
 
 ## TODO 📝
 
-- [ ] Write tests
 - [ ] Write documentation
 - [ ] Write GH action to publish on npm

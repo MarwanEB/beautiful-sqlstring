@@ -7,7 +7,7 @@ import { sql } from './sql'
  * If a value is set to `undefined`, the field will be skipped.
  * @example
  * ```ts
- * const [ids, statement] = sqlUpdateStatement([
+ * const [ids, statement] = sqlUpdate([
  *   { id: 1, name: 'John', age: 1 },
  *   { id: 2, age: null },
  * ])
@@ -18,29 +18,27 @@ import { sql } from './sql'
  *     id IN (${ids})`
  * const rows = await mysql.query(query)
  *
- * getSqlUpdateField([{ id: 1, name: 'John', age: 1 }, { id: 2, age: 2 }], 'id') === sql`
- *   name = CASE
- *     WHEN id = 1 THEN 'John'
- *     ELSE name
- *   END,
- *   age = CASE
- *     WHEN id = 1 THEN 1
- *     WHEN id = 2 THEN NULL
- *     ELSE age
- *   END`
+ * sqlUpdate([{ id: 1, name: 'John', age: 1 }, { id: 2, age: 2 }], 'id') === [
+ *  [1, 2],
+ *  sqlString(`
+ *    name = CASE
+ *      WHEN id = 1 THEN 'John'
+ *      ELSE name
+ *    END,
+ *    age = CASE
+ *      WHEN id = 1 THEN 1
+ *      WHEN id = 2 THEN NULL
+ *      ELSE age
+ *    END`)
  * ```
+ * ]
  */
-export const sqlUpdateStatement = <Id extends string>(
-  elements: ({ [key: string]: SqlParameter } & Record<Id, (string|number)>)[],
+export const sqlUpdate = <Id extends string, IdType extends string | number>(
+  elements: ({ [key: string]: SqlParameter } & Record<Id, IdType>)[],
   idKey: Id,
-): [ids: (string|number)[], SqlKey] => {
-  const resultByKey: {
-    [key: string]: [
-      id: string | number,
-      value: SqlParameter,
-    ][],
-  } = {}
-  const ids: (string| number)[] = []
+): [ids: IdType[], SqlKey] => {
+  const resultByKey: Record<string, [id: IdType, value: SqlParameter][]> = {}
+  const ids: IdType[] = []
 
   for (const element of elements) {
     const id = element[idKey]
@@ -64,12 +62,15 @@ export const sqlUpdateStatement = <Id extends string>(
   const result: string[] = []
 
   for (const key in resultByKey) {
-    let resultKey = ''
-    for (const [id, value] of resultByKey[key] ?? []) {
-      resultKey += sql`WHEN ${sqlKey(id)} THEN ${value}\n`
+    if (key !== idKey) {
+      let resString = `${key} = CASE\n`
+  
+      for (const [id, value] of resultByKey[key]) {
+        resString += sql`WHEN ${sqlKey(idKey)} = ${id} THEN ${value}\n`
+      }
+      result.push(resString + `ELSE ${key}\nEND`)
     }
-    result.push(resultKey + `ELSE ${sqlKey(key)}\nEND\n`)
   }
 
-  return [ids, sqlKey(result.join(', '))]
+  return [ids, sqlKey(result.join(',\n'))]
 }

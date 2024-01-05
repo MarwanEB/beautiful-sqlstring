@@ -1,4 +1,4 @@
 export type * from './types.d'
-export * from './sql'
-export * from './sql-key'
-export * from './update-statement'
+export { sql } from './sql'
+export { sqlKey } from './sql-key'
+export { sqlUpdate } from './sql-update'
