@@ -1,6 +1,7 @@
 # beautiful-sqlstring
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![npm version](https://badge.fury.io/js/beautiful-sqlstring.svg)](https://badge.fury.io/js/beautiful-sqlstring)
 [![Build Status](https://github.com/MarwanEB/beautiful-sqlstring/actions/workflows/main.yaml/badge.svg)](https://github.com/MarwanEB/beautiful-sqlstring/actions/workflows/main.yaml)
 [![Code coverage](https://codecov.io/gh/MarwanEB/beautiful-sqlstring/graph/badge.svg?token=ZFK2TXK7D1)](https://codecov.io/gh/MarwanEB/beautiful-sqlstring)
 
