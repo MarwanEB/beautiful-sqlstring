@@ -16,20 +16,18 @@ import { sql } from './sql'
  *   SET ${statement}
  *   WHERE
  *     id IN (${ids})`
- * const rows = await mysql.query(query)
- *
- * sqlUpdate([{ id: 1, name: 'John', age: 1 }, { id: 2, age: 2 }], 'id') === [
- *  [1, 2],
- *  sqlString(`
- *    name = CASE
- *      WHEN id = 1 THEN 'John'
- *      ELSE name
- *    END,
- *    age = CASE
- *      WHEN id = 1 THEN 1
- *      WHEN id = 2 THEN NULL
- *      ELSE age
- *    END`)
+ * // Output:
+ * // UPDATE users
+ * // SET name = CASE
+ * //   WHEN id = 1 THEN 'John'
+ * //   ELSE name
+ * // END,
+ * // age = CASE
+ * //   WHEN id = 1 THEN 1
+ * //   WHEN id = 2 THEN NULL
+ * //   ELSE age
+ * // END
+ * // WHERE id IN (1, 2)
  * ```
  * ]
  */

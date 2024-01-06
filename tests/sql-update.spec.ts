@@ -1,4 +1,4 @@
-import { sqlUpdate } from '../src/index'
+import { sql, sqlUpdate } from '../src/index'
 
 describe ('sqlUpdate', () => {
   it ('should return number ids and associated SQL statement', () => {
@@ -6,10 +6,13 @@ describe ('sqlUpdate', () => {
       { id: 1, name: 'John', age: 1 },
       { id: 2, age: null },
     ], 'id')
-    console.log(statement.toSqlString())
-    expect(ids).toEqual([1, 2])
-    expect(statement.toSqlString()).toEqual(
-`name = CASE
+    expect(sql`
+UPDATE users
+SET ${statement}
+WHERE id IN (${ids})`
+).toBe(`
+UPDATE users
+SET name = CASE
 WHEN id = 1 THEN 'John'
 ELSE name
 END,
@@ -17,14 +20,14 @@ age = CASE
 WHEN id = 1 THEN 1
 WHEN id = 2 THEN NULL
 ELSE age
-END`)
+END
+WHERE id IN (1, 2)`)
   })
   it ('should return string ids and associated SQL statement', () => {
     const [ids, statement] = sqlUpdate([
       { id: 'a', name: 'John', age: 1 },
       { id: 'b', age: null },
     ], 'id')
-    console.log(statement.toSqlString())
     expect(ids).toEqual(['a', 'b'])
     expect(statement.toSqlString()).toEqual(
 `name = CASE
