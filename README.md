@@ -13,7 +13,13 @@ Starting by adding the library in your project.
 
 ```sh
 npm install --save beautiful-sqlstring
+```
+
+```sh
 yarn add beautiful-sqlstring
+```
+
+```sh
 pnpm add beautiful-sqlstring
 ```
 
@@ -38,6 +44,12 @@ const query1 = sql`
   WHERE name LIKE ${"%john%"}
 `;
 // SELECT id, name FROM users WHERE name LIKE "%john%"
+```
+
+```ts
+import { sql, sqlKey } from 'beautiful-sqlstring';
+
+const TABLE_NAME = 'users';
 
 function getUsers(shouldIncludeName: boolean) {
   const query2 = sql`
@@ -68,6 +80,12 @@ const query = sql`
     ['Jane', 21],
   ]}`;
 // INSERT INTO users (name, age) VALUES ("John", 20), ("Jane", 21)
+```
+
+```ts
+import { sql, sqlKey } from 'beautiful-sqlstring';
+
+const TABLE_NAME = 'users';
 
 function insertUsers(users: { name: string; age: number }[]) {
   const query = sql`
@@ -93,6 +111,13 @@ const query = sql`
   UPDATE ${sqlKey(TABLE_NAME)}
   SET ${{ name: 'John', age: 20 }}
   WHERE id = ${1}`;
+// UPDATE users SET name = "John", age = 20 WHERE id = 1
+```
+
+```ts
+import { sql, sqlKey } from 'beautiful-sqlstring';
+
+const TABLE_NAME = 'users';
 
 function updateUser(user: { name: string, age: number, id: number }) {
   const {id, ...rest } = user
@@ -100,6 +125,7 @@ function updateUser(user: { name: string, age: number, id: number }) {
     UPDATE ${sqlKey(TABLE_NAME)}
     SET ${rest}
     WHERE id = ${id}`;
+  // ...
 }
 ```
 
@@ -171,7 +197,6 @@ npm ci
 3. You can run your tests with the following commands
 
 ```sh
-npm run test
 npm run test:watch
 ```
 
@@ -180,9 +205,12 @@ npm run test:watch
 
 ```sh
 npm version patch | minor | major
+```
+
+```sh
 git push origin your-branch
 ```
 
 ## TODO 📝
 
-- [ ] Remove `sqlstring` dependency
+- Remove `sqlstring` dependency
