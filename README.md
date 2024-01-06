@@ -1,6 +1,7 @@
 # beautiful-sqlstring
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![npm version](https://badge.fury.io/js/beautiful-sqlstring.svg)](https://badge.fury.io/js/beautiful-sqlstring)
 [![Build Status](https://github.com/MarwanEB/beautiful-sqlstring/actions/workflows/main.yaml/badge.svg)](https://github.com/MarwanEB/beautiful-sqlstring/actions/workflows/main.yaml)
 [![Code coverage](https://codecov.io/gh/MarwanEB/beautiful-sqlstring/graph/badge.svg?token=ZFK2TXK7D1)](https://codecov.io/gh/MarwanEB/beautiful-sqlstring)
 
@@ -11,9 +12,9 @@ Lightweight MySQL escaping library providing helpers to write readable TypeScrip
 Starting by adding the library in your project.
 
 ```sh
-$ npm install --save beautiful-sqlstring
-$ yarn add beautiful-sqlstring
-$ pnpm add beautiful-sqlstring
+npm install --save beautiful-sqlstring
+yarn add beautiful-sqlstring
+pnpm add beautiful-sqlstring
 ```
 
 `beautiful-sqlstring` provides 3 main functions to escape and format your SQL queries:
@@ -158,29 +159,28 @@ To bundle this project you first need to install [nvm](https://github.com/nvm-sh
 1. Install the right version of node / npm
 
 ```sh
-$ nvm install && nvm use
+nvm install && nvm use
 ```
 
 2. Install dependencies
 
 ```sh
-$ npm ci
+npm ci
 ```
 
 3. You can run your tests with the following commands
 
 ```sh
-$ npm run test
-$ npm run test:watch
+npm run test
+npm run test:watch
 ```
 
 4. You can build your code with the following command (once the command works properly, you will see `dist` folder)
-5. To publish your package to npm, you'll need to push your version in `package.json` and push your changes to the `main` branch.
-
+5. To publish your package to npm, you'll need to push your version in `package.json`, push your changes to your branch and open / merge a Pull Request to `main` branch.
 
 ```sh
-$ npm version patch | minor | major
-$ git push origin main
+npm version patch | minor | major
+git push origin your-branch
 ```
 
 ## TODO 📝
