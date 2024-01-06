@@ -1,6 +1,6 @@
 {
   "name": "beautiful-sqlstring",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Beautiful MySQL escaping and formatting library using String templating.",
   "scripts": {
     "build": "tsup ./src",
