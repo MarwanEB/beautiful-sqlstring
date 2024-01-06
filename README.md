@@ -175,10 +175,14 @@ $ npm run test:watch
 ```
 
 4. You can build your code with the following command (once the command works properly, you will see `dist` folder)
-5. TODO: Publish your package by running the associated GitHub action
+5. To publish your package to npm, you'll need to push your version in `package.json` and push your changes to the `main` branch.
 
+
+```sh
+$ npm version patch | minor | major
+$ git push origin main
+```
 
 ## TODO 📝
 
-- [ ] Write GH action to publish on npm
 - [ ] Remove `sqlstring` dependency
